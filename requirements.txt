@@ -1,5 +1,0 @@
-langchain
-unstructured[pdf,docx]
-fastapi
-langchain_docling
-langchain_community
