@@ -1,5 +1,5 @@
 from fastapi import APIRouter, File, UploadFile
-from crud.neo import upload_file_pdf, merge_results, queryenhancer, show_chat_history
+from crud.vector_store import upload_file_pdf, merge_results, orchestrate, show_chat_history
 import tempfile, os
 
 
@@ -24,7 +24,10 @@ async def upload_pdf(file: UploadFile = File(...)):
 @neo.get("/query_rag/")
 async def query_rag_endpoint(question: str):
     try:
-        question = await queryenhancer(question)
+        question = await orchestrate(question)
+        if question["action"] == "direct":
+            return {"answer": question["response"]}
+        question = question["response"]
         response = await merge_results(question)
         return response
     except Exception as e:

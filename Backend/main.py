@@ -1,9 +1,11 @@
 from fastapi import FastAPI
-from routes.neo import neo
+from routes.vector_query import neo
+from crud.orchestrator import test
 
 
 app = FastAPI()
 app.include_router(neo)
+app.include_router(test)
 
 
 
